@@ -2,14 +2,16 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id),SIZES=[.18,.6,3,12],VERSION='0.2.0',SAVE_KEY='kyoho-save-v1';
 const isTouch=matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0;if(isTouch)document.body.classList.add('touch');
-const options={labels:true,sound:true,quality:'standard',reduced:matchMedia('(prefers-reduced-motion:reduce)').matches,contour:false,dusk:false};
+const options={character:'giant',labels:true,sound:true,quality:'standard',reduced:matchMedia('(prefers-reduced-motion:reduce)').matches,contour:false,dusk:false};
 let saved=null;try{saved=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');if(saved?.version===1&&saved.options)Object.assign(options,saved.options)}catch{}
+if(!['giant','squid'].includes(options.character))options.character='giant';
 let renderer;try{renderer=new TinyGL($('world'))}catch(e){$('fatal').classList.remove('hidden');$('fatalMessage').textContent=e.message;return;}
 const terrain=new JapanTerrain(renderer),demoMeshes=createDemoTerrain(renderer),cube=cubeMesh(renderer),sphere=sphereMesh(renderer),ring=ringMesh(renderer),water=planeMesh(renderer),ribbon=renderer.mesh([],null,true),particleMesh=renderer.mesh([],null,true);
 const STATS=saved?.stats&&typeof saved.stats==='object'?saved.stats:{demo:{distance:0,best:0},japan:{distance:0,best:0}};
 for(const mode of['demo','japan']){if(!STATS[mode])STATS[mode]={distance:0,best:0};for(const f of['distance','best'])if(!Number.isFinite(STATS[mode][f])||STATS[mode][f]<0)STATS[mode][f]=0;}
 const placesWorld=new JapanPlaces(renderer,cube,ring);
 const S={mode:'demo',started:false,modal:null,pending:null,auto:false,lat:36.26,lon:137.66,x:8,z:20,y:0,vy:0,vx:0,vz:0,ground:0,grounded:true,size:.6,sizeIndex:1,targetSize:.6,heading:0,camYaw:0,camPitch:.24,camDist:1,camEye:[0,5,5],energy:1,gait:0,time:0,distance:0,flow:0,gates:0,routeIndex:0,challenge:false,remaining:90,challengeDistance:0,challengeScore:0,region:DESTINATIONS[0],lastFoot:0,jumpBuffer:0,tutorial:0,startedAt:0,gliding:false,loadingMove:false,photo:false};
+S.character=options.character;
 S.ground=Math.max(0,demoHeight(S.x,S.z));S.y=S.ground;
 let frame=frameAt(S.lat,S.lon),route=[],particles=[],pulses=[],lastNow=performance.now()/1000,lastUI=0,lastSave=0,toastUntil=0,tipUntil=0,photoBlob=null,photoURL=null,didJump=false,didSize=false,stoppedForData=false;
 let autoResolution=1;
@@ -80,7 +82,45 @@ function updateMovement(dt){if(!S.started||S.modal)return;const ease=1-Math.exp(
  if(actualSpeed>.1)audio.wind(clamp(actualSpeed/(S.size*4),0,1),S.gliding);
 }
 function localBody(p){const c=Math.cos(S.heading),s=Math.sin(S.heading),h=S.size;return[(c*p[0]-s*p[2])*h,S.y+p[1]*h,(s*p[0]+c*p[2])*h]}
-function renderAvatar(){const r=renderer,h=S.size,run=clamp(Math.hypot(S.vx,S.vz)/(h*2),0,1),phase=S.gait,bob=S.grounded?Math.abs(Math.sin(phase))*.025*run:0;
+// One reusable mesh holds all ten animated arms; no per-frame GPU allocations.
+const squidArms=renderer.mesh([],null,true);
+const squidMantle=(()=>{const d=[],profile=[[.48,.10],[.58,.145],[.75,.14],[.91,.075],[1,0]];
+ for(let j=0;j<profile.length-1;j++)for(let i=0;i<20;i++){
+  const point=(row,k)=>{const [y,r]=profile[row],a=k/20*Math.PI*2;return [Math.cos(a)*r,y,Math.sin(a)*r*.78]};
+  const a=point(j,i),b=point(j,i+1),c=point(j+1,i),e=point(j+1,i+1);
+  for(const tri of [[a,b,c],[b,e,c]]){const n=V.norm(V.cross(V.sub(tri[1],tri[0]),V.sub(tri[2],tri[0])));for(const p of tri)vertex(d,p,n)}
+ }
+ for(const side of [-1,1]){const tri=[[side*.055,.94,0],[side*.34,.70,.015],[side*.10,.61,.035]],n=V.norm(V.cross(V.sub(tri[1],tri[0]),V.sub(tri[2],tri[0])));for(const p of tri)vertex(d,p,n,[1,.72,.65]);}
+ return renderer.mesh(d);
+})();
+function renderSquid(){const r=renderer,h=S.size,run=clamp(Math.hypot(S.vx,S.vz)/(h*2),0,1),phase=S.gait;
+ const bob=S.grounded?Math.sin(phase*2)*.012*run:0,coral=[.96,.43,.34,1],cream=[1,.86,.69,1];
+ const body=p=>localBody([p[0],p[1]+bob,p[2]]);
+ r.draw(squidMantle,M.trs(body([0,0,0]),[h,h,h],-S.heading),coral,1);
+ const ellipsoid=(p,scale,color,glow=0)=>r.draw(sphere,M.trs(body(p),scale.map(v=>v*h),-S.heading),color,1,0,glow);
+ ellipsoid([0,.47,0],[.26,.21,.23],coral);
+ for(const side of [-1,1]){ellipsoid([side*.119,.49,-.04],[.085,.10,.10],cream);ellipsoid([side*.148,.49,-.065],[.035,.062,.06],[.04,.13,.15,1]);ellipsoid([side*.156,.505,-.082],[.015,.022,.019],[1,1,.9,1],.3);}
+ const data=[];
+ for(let arm=0;arm<10;arm++){
+  const angle=arm/10*Math.PI*2,long=arm===2||arm===7,points=[],rings=[],wave=phase+arm*Math.PI*.8;
+  for(let j=0;j<=10;j++){const t=j/10,spread=(long?.43:.30)*t,step=Math.sin(wave-t*3)*run;
+   let x=Math.cos(angle)*(.085+spread),z=Math.sin(angle)*(.085+spread)+step*.085*t;
+   let y=.43*(1-t)+.025+Math.pow(t,3)*(.025+Math.max(0,Math.cos(wave))*.12*run);
+   if(!S.grounded){x+=Math.cos(angle)*t*(S.gliding?.27:.04);z+=t*t*.24;y+=t*(S.gliding?.22:.07);}
+   z+=Math.sin(S.time*2.3-arm+t*5)*.018*t;
+   points.push([x,y,z]);
+  }
+  for(let j=0;j<=10;j++){const tangent=V.norm(V.sub(points[Math.min(10,j+1)],points[Math.max(0,j-1)])),u=V.norm(V.cross(tangent,[0,0,1])),v=V.cross(tangent,u),t=j/10;
+   const radius=(.024*(1-t)+.004)*(long&&t>.65?1.7:1);
+   rings.push(Array.from({length:6},(_,k)=>{const a=k/6*Math.PI*2,n=V.add(V.mul(u,Math.cos(a)),V.mul(v,Math.sin(a)));return {p:V.add(points[j],V.mul(n,radius)),n};}));
+  }
+  for(let j=0;j<10;j++)for(let k=0;k<6;k++)for(const [row,col] of [[j,k],[j,(k+1)%6],[j+1,k],[j,(k+1)%6],[j+1,(k+1)%6],[j+1,k]]){const q=rings[row][col];vertex(data,q.p,q.n,k<3?[1,.86,.72]:[1,1,1]);}
+ }
+ r.update(squidArms,data);r.draw(squidArms,M.trs(body([0,0,0]),[h,h,h],-S.heading),coral,1);
+}
+function selectCharacter(id){if(!['giant','squid'].includes(id))return;S.character=options.character=id;updateCharacters();save();}
+function updateCharacters(){for(const b of document.querySelectorAll('[data-character]'))b.setAttribute('aria-pressed',String(b.dataset.character===S.character));}
+function renderAvatar(){if(S.character==='squid'){renderSquid();return;}const r=renderer,h=S.size,run=clamp(Math.hypot(S.vx,S.vz)/(h*2),0,1),phase=S.gait,bob=S.grounded?Math.abs(Math.sin(phase))*.025*run:0;
  const white=[.91,.91,.79,1],shade=[.48,.66,.60,1],orange=[.96,.49,.24,1],dark=[.075,.18,.19,1],light=[.78,.99,.89,1];
  const block=(p,s,color,yaw=-S.heading,rx=0,em=0)=>r.draw(cube,M.trs(localBody(p),s.map(v=>v*h),yaw,rx),color,1,0,em);
  const ball=(p,s,color,em=0)=>r.draw(sphere,M.trs(localBody(p),[s*h,s*h,s*h]),color,1,0,em);
@@ -144,7 +184,7 @@ class Sound{
 }
 const audio=new Sound;
 // All input is scoped to active play; no pointer-lock requirement on mobile or desktop.
-window.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;const prevent=['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'];if(prevent.includes(e.code))e.preventDefault();if(S.modal){if(e.code==='Escape'&&S.modal!=='loading')modal(null);return;}if(!S.started){if(e.code==='Enter')startDemo();return}input.keys.add(e.code);lastInput=S.time;if(e.repeat)return;if(e.code==='Space')requestJump();else if(e.code==='KeyE')setSize((S.sizeIndex+1)%4);else if(['Digit1','Digit2','Digit3','Digit4'].includes(e.code))setSize(+e.code.slice(-1)-1);else if(e.code==='KeyM')modal('mapModal');else if(e.code==='KeyP')snapshot();else if(e.code==='Escape')modal('settings');else if(e.code==='KeyR'){S.auto=!S.auto;tip(S.auto?'自動走行中。J / Lキーやドラッグで方向を変えます。Rでも停止できます。':'自動走行を停止しました。',3)}else if(e.code==='KeyF')toggleFullscreen();});
+window.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||(e.target.closest('button')&&['Enter','Space'].includes(e.code)))return;const prevent=['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'];if(prevent.includes(e.code))e.preventDefault();if(S.modal){if(e.code==='Escape'&&S.modal!=='loading')modal(null);return;}if(!S.started){if(e.code==='Enter')startDemo();return}input.keys.add(e.code);lastInput=S.time;if(e.repeat)return;if(e.code==='Space')requestJump();else if(e.code==='KeyE')setSize((S.sizeIndex+1)%4);else if(['Digit1','Digit2','Digit3','Digit4'].includes(e.code))setSize(+e.code.slice(-1)-1);else if(e.code==='KeyM')modal('mapModal');else if(e.code==='KeyP')snapshot();else if(e.code==='Escape')modal('settings');else if(e.code==='KeyR'){S.auto=!S.auto;tip(S.auto?'自動走行中。J / Lキーやドラッグで方向を変えます。Rでも停止できます。':'自動走行を停止しました。',3)}else if(e.code==='KeyF')toggleFullscreen();});
 window.addEventListener('keyup',e=>input.keys.delete(e.code));window.addEventListener('blur',()=>{input.keys.clear();input.jump=input.dash=false;input.joyX=input.joyY=0;S.auto=false;if(S.started&&!S.modal)modal('settings')});document.addEventListener('visibilitychange',()=>{if(document.hidden&&S.started&&!S.modal)modal('settings')});
 $('world').addEventListener('pointerdown',e=>{if(!S.started||S.modal)return;input.drag=true;input.dragId=e.pointerId;input.lastX=e.clientX;input.lastY=e.clientY;$('world').setPointerCapture(e.pointerId);lastInput=S.time;});
 $('world').addEventListener('pointermove',e=>{if(!input.drag||e.pointerId!==input.dragId)return;let dx=e.clientX-input.lastX,dy=e.clientY-input.lastY;S.camYaw-=dx*.005;S.camPitch=clamp(S.camPitch+dy*.0035,-.07,.90);input.lastX=e.clientX;input.lastY=e.clientY;lastInput=S.time;});
@@ -162,5 +202,7 @@ $('againBtn').onclick=startChallenge;$('freeBtn').onclick=()=>{modal(null);showT
 window.addEventListener('resize',()=>{if(S.modal==='mapModal')drawAtlas()});$('world').addEventListener('webglcontextlost',e=>{e.preventDefault();$('fatal').classList.remove('hidden');$('fatalMessage').textContent='3D描画が中断されました。再読み込みし、設定から「軽量」を選んでください。';save()});
 function loop(){const now=performance.now()/1000,rawDt=Math.max(.001,now-lastNow),dt=Math.min(rawDt,.5);lastNow=now;S.time+=dt;try{pollLoading();const steps=Math.ceil(dt/.025);for(let i=0;i<steps;i++)updateMovement(dt/steps);render(dt);if(S.time-lastUI>.12){lastUI=S.time;updateUI()}if(S.time>toastUntil)$('toast').classList.remove('show');if(S.time>tipUntil)$('tip').classList.add('hidden');if(S.started&&S.time-lastSave>5){lastSave=S.time;save()}fpsCounter++;fpsElapsed+=rawDt;if(fpsElapsed>2){currentFps=Math.round(fpsCounter/fpsElapsed);if(currentFps<26)autoResolution=Math.max(.58,autoResolution*.84);else if(currentFps>52)autoResolution=Math.min(1,autoResolution*1.05);fpsElapsed=0;fpsCounter=0;$('fps').textContent=currentFps+' FPS · '+renderer.draws+' draws · '+Math.round(renderer.tris/1000)+'k triangles';}}catch(e){console.error(e);$('fatal').classList.remove('hidden');$('fatalMessage').textContent='描画中にエラーが発生しました：'+e.message;return;}requestAnimationFrame(loop)}
 window.KYOHO={version:VERSION,places:placesWorld,placeData:{mountains:WORLD_MOUNTAINS,towns:WORLD_TOWNS},state:S,terrain,renderer,options,stats:STATS,startDemo,startJapan,setSize,startChallenge,finishChallenge,snapshot,getRoute:()=>route,ground:demoHeight,decodeDEM,geo:{ecef,frameAt,localGeo,offsetLL,haversine,tileXY,tileLL},step:dt=>updateMovement(dt),showFPS:()=>{$('fps').style.display='block'},getFPS:()=>currentFps};
+for(const b of document.querySelectorAll('[data-character]'))b.onclick=()=>selectCharacter(b.dataset.character);
+updateCharacters();
 requestAnimationFrame(loop);
 })();
