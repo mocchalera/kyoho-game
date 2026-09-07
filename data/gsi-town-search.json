@@ -1,0 +1,386 @@
+{
+  "長野県松本市": [
+    {
+      "geometry": {
+        "coordinates": [
+          137.971954,
+          36.238056
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "長野県松本市"
+      }
+    }
+  ],
+  "長野県大町市": [
+    {
+      "geometry": {
+        "coordinates": [
+          137.850922,
+          36.502983
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "長野県大町市"
+      }
+    }
+  ],
+  "岐阜県高山市": [
+    {
+      "geometry": {
+        "coordinates": [
+          137.252243,
+          36.146049
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "岐阜県高山市"
+      }
+    }
+  ],
+  "富山県富山市": [
+    {
+      "geometry": {
+        "coordinates": [
+          137.213715,
+          36.695904
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "富山県富山市"
+      }
+    }
+  ],
+  "山梨県富士吉田市": [
+    {
+      "geometry": {
+        "coordinates": [
+          138.807861,
+          35.487507
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "山梨県富士吉田市"
+      }
+    }
+  ],
+  "静岡県富士宮市": [
+    {
+      "geometry": {
+        "coordinates": [
+          138.621613,
+          35.221977
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "静岡県富士宮市"
+      }
+    }
+  ],
+  "山梨県甲府市": [
+    {
+      "geometry": {
+        "coordinates": [
+          138.568298,
+          35.662231
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "山梨県甲府市"
+      }
+    }
+  ],
+  "長野県茅野市": [
+    {
+      "geometry": {
+        "coordinates": [
+          138.15889,
+          35.995556
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "長野県茅野市"
+      }
+    }
+  ],
+  "北海道旭川市": [
+    {
+      "geometry": {
+        "coordinates": [
+          142.365295,
+          43.771435
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "北海道旭川市"
+      }
+    }
+  ],
+  "北海道帯広市": [
+    {
+      "geometry": {
+        "coordinates": [
+          143.196228,
+          42.924175
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "北海道帯広市"
+      }
+    }
+  ],
+  "北海道利尻郡利尻富士町": [
+    {
+      "geometry": {
+        "coordinates": [
+          141.214722,
+          45.247501
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "北海道利尻郡利尻富士町"
+      }
+    }
+  ],
+  "岩手県盛岡市": [
+    {
+      "geometry": {
+        "coordinates": [
+          141.154465,
+          39.702068
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "岩手県盛岡市"
+      }
+    }
+  ],
+  "秋田県にかほ市": [
+    {
+      "geometry": {
+        "coordinates": [
+          139.907806,
+          39.203003
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "秋田県にかほ市"
+      }
+    }
+  ],
+  "群馬県沼田市": [
+    {
+      "geometry": {
+        "coordinates": [
+          139.042801,
+          36.643967
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "群馬県沼田市"
+      }
+    }
+  ],
+  "東京都八王子市": [
+    {
+      "geometry": {
+        "coordinates": [
+          139.315842,
+          35.666668
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "東京都八王子市"
+      }
+    }
+  ],
+  "奈良県五條市": [
+    {
+      "geometry": {
+        "coordinates": [
+          135.695557,
+          34.356358
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "奈良県五條市"
+      }
+    }
+  ],
+  "鳥取県米子市": [
+    {
+      "geometry": {
+        "coordinates": [
+          133.330948,
+          35.428158
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "鳥取県米子市"
+      }
+    }
+  ],
+  "愛媛県西条市": [
+    {
+      "geometry": {
+        "coordinates": [
+          133.181122,
+          33.919495
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "愛媛県西条市"
+      }
+    }
+  ],
+  "熊本県阿蘇市": [
+    {
+      "geometry": {
+        "coordinates": [
+          131.121277,
+          32.952099
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "熊本県阿蘇市"
+      }
+    }
+  ],
+  "鹿児島県霧島市": [
+    {
+      "geometry": {
+        "coordinates": [
+          130.76329,
+          31.740877
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "鹿児島県霧島市"
+      }
+    }
+  ],
+  "鹿児島県熊毛郡屋久島町": [
+    {
+      "geometry": {
+        "coordinates": [
+          130.651108,
+          30.390165
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "鹿児島県熊毛郡屋久島町"
+      }
+    }
+  ],
+  "沖縄県国頭郡国頭村": [
+    {
+      "geometry": {
+        "coordinates": [
+          128.178284,
+          26.745743
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "沖縄県国頭郡国頭村"
+      }
+    }
+  ],
+  "長野県北安曇郡白馬村": [
+    {
+      "geometry": {
+        "coordinates": [
+          137.862228,
+          36.698334
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "長野県北安曇郡白馬村"
+      }
+    }
+  ],
+  "長野県伊那市": [
+    {
+      "geometry": {
+        "coordinates": [
+          137.953888,
+          35.827499
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "addressCode": "",
+        "title": "長野県伊那市"
+      }
+    }
+  ]
+}

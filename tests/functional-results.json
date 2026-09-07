@@ -1,0 +1,151 @@
+[
+  {
+    "test": "WebGL startup without fatal error",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Start button opens playable fictional island",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Keyboard run advances",
+    "passed": true,
+    "details": 1.2338521547539316
+  },
+  {
+    "test": "Release key decelerates",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Dash drains energy",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Dash boosts speed",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Jump leaves terrain",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Holding jump glides",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Landing restores grounded state",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Scale 0.18 km",
+    "passed": true,
+    "details": 0.18
+  },
+  {
+    "test": "Scale 0.6 km",
+    "passed": true,
+    "details": 0.6
+  },
+  {
+    "test": "Scale 3 km",
+    "passed": true,
+    "details": 2.9988701733329375
+  },
+  {
+    "test": "Scale 12 km",
+    "passed": true,
+    "details": 11.99610612189944
+  },
+  {
+    "test": "Menu pauses movement",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "90 second challenge starts",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Challenge clock advances",
+    "passed": true,
+    "details": 88.0000000000004
+  },
+  {
+    "test": "Menu pauses challenge clock",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "All eight sequential gates collect",
+    "passed": true,
+    "details": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  {
+    "test": "Result screen and high score",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Timeout ends challenge",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "18 Japan destinations present",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "RGB elevation decoder and no-data",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Latitude/longitude tiles round trip",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "ECEF consistent kilometre scale",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Photograph PNG generated",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Storage unavailable fallback is explicit",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "No JavaScript exceptions",
+    "passed": true,
+    "details": []
+  },
+  {
+    "test": "No WebGL errors",
+    "passed": true,
+    "details": null
+  }
+]

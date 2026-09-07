@@ -1,0 +1,19 @@
+# Local and deployment state
+.wrangler/
+website/.wrangler/
+website/.playwright-cli/
+
+# Local verification output and preserved pre-change copies
+backups/
+website/backups/
+output/
+website/output/
+screenshots/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+
+# Python bytecode
+__pycache__/
+*.py[cod]

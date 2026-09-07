@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kyoho-game",
+  "account_id": "ae513d535f271f48af74d480588218f0",
+  "compatibility_date": "2026-09-07",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    {
+      "pattern": "kyoho.mocchalera.app",
+      "custom_domain": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
+const ctx=vm.createContext({});vm.runInContext(fs.readFileSync('src/engine.js','utf8')+'\n'+fs.readFileSync('src/places.js','utf8')+'\nthis.rules=TownRules;',ctx);
+const town={lat:36.238056,lon:137.971954,radius:.9};
+const base={mode:'japan',started:true,lat:town.lat,lon:town.lon,size:.18,grounded:true,y:.6,vx:0,vz:0,modal:null,loadingMove:false};
+const ground={h:.6,valid:true};
+assert.equal(ctx.rules.evaluate(base,town,ground).recovering,true);
+for(const patch of [{mode:'demo'},{started:false},{size:3},{grounded:false},{vx:.1},{modal:'settings'},{loadingMove:true},{lat:37},{y:1}])assert.equal(ctx.rules.evaluate({...base,...patch},town,ground).recovering,false,JSON.stringify(patch));
+assert.equal(ctx.rules.evaluate(base,town,null).recovering,false);
+assert.equal(ctx.rules.evaluate(base,town,{h:.6,valid:false}).recovering,false);
+assert.equal(ctx.rules.evaluate({...base,size:.6},town,ground).recovering,true);
+assert.equal(ctx.rules.recover(.9,1),1);assert.equal(ctx.rules.recover(.2,-1),.2);
+assert.ok(ctx.rules.recover(.2,.1)>.2);
+console.log('Town recovery: eligible landing, 11 exclusions, size boundary, refill and cap passed');

@@ -1,0 +1,119 @@
+[
+  {
+    "test": "Touch start works",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Portrait touch controls within screen",
+    "passed": true,
+    "details": [
+      {
+        "id": "joystick",
+        "visible": true
+      },
+      {
+        "id": "touchJump",
+        "visible": true
+      },
+      {
+        "id": "touchDash",
+        "visible": true
+      },
+      {
+        "id": "sizeButtons",
+        "visible": true
+      },
+      {
+        "id": "menuBtn",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "test": "Native touch joystick moves",
+    "passed": true,
+    "details": 0.9784958108203313
+  },
+  {
+    "test": "Joystick release stops motion",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Touch scale switching",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Landscape touch controls within screen",
+    "passed": true,
+    "details": [
+      {
+        "id": "joystick",
+        "visible": true
+      },
+      {
+        "id": "touchJump",
+        "visible": true
+      },
+      {
+        "id": "touchDash",
+        "visible": true
+      },
+      {
+        "id": "sizeButtons",
+        "visible": true
+      },
+      {
+        "id": "menuBtn",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "test": "Synthetic fixture enters Japan streaming mode",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Official GSI PNG URL template",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Synthetic 1000m fixture height decoded",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "ECEF terrain meshes generated",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "LOD changes with giant scale",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Rendered Japan fixture has no WebGL errors",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Unavailable DEM shows explicit error",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "Failure safely switches to fictional training",
+    "passed": true,
+    "details": null
+  },
+  {
+    "test": "No JavaScript exceptions in touch/data tests",
+    "passed": true,
+    "details": []
+  }
+]
