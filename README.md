@@ -4,7 +4,7 @@
 巨大化・縮小しながら走り、山を踏み切り、風に乗るブラウザゲームのプロトタイプです。
 バージョン 0.2.0 / 2026-09-07
 
-公開中：<https://kyoho.mocchalera.app/>（[ゲームをプレイ](https://kyoho.mocchalera.app/play/)）
+公開中：<https://kyoho.mocchalera.app/>（[ゲームをプレイ](https://kyoho.mocchalera.app/play/)）　[ソースコード（GitHub）](https://github.com/mocchalera/kyoho-game)
 
 ## 最初に — この版で確認できていること
 
